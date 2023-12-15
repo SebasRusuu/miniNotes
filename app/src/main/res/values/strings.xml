@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MiniNotes</string>
+
+    <!-- Edit item Activity -->
+    <string name="edit_todo_item">Edit a Todo item</string>
+
+    <!-- Titulo View -->
+    <string name="titView">Título</string>
+
+    <!-- Notas -->
+    <string name="notes">Notes</string>
+    <string name="description">Write a description</string>
 </resources>
