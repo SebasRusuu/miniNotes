@@ -14,4 +14,5 @@
     <string name="save_notes">Save Notes</string>
     <string name="delete_notes">Delete Notes</string>
     <string name="description">Write a description</string>
+    <string name="data_mod">Data de Modificação</string>
 </resources>
