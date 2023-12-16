@@ -2,12 +2,16 @@
     <string name="app_name">MiniNotes</string>
 
     <!-- Edit item Activity -->
-    <string name="edit_todo_item">Edit a Todo item</string>
+    <string name="notes_tit">Notes</string>
 
+    <!-- Main activity -->
+    <string name="new_note">New Note</string>
     <!-- Titulo View -->
     <string name="titView">Título</string>
 
     <!-- Notas -->
     <string name="notes">Notes</string>
+    <string name="save_notes">Save Notes</string>
+    <string name="delete_notes">Delete Notes</string>
     <string name="description">Write a description</string>
 </resources>
