@@ -3,6 +3,7 @@ package pt.iade.sebastiaorusu.atividade;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,8 +27,9 @@ public class NoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
-        note = new NoteItem(0, "Teste", "aisjdasuduahsuasdhusa", GregorianCalendar.getInstance());
-
+        //get the item from the intent
+        Intent intent = getIntent();
+        note = (NoteItem) intent.getSerializableExtra("note");
         setupComponents();
     }
 

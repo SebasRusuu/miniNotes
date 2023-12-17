@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.GregorianCalendar;
+
+import pt.iade.sebastiaorusu.atividade.models.NoteItem;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.add_note){
             //Action "add" button
             Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+            intent.putExtra("note", new NoteItem());
             startActivity(intent);
 
             return true;
