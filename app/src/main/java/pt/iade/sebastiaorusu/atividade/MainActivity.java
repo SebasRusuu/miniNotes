@@ -2,23 +2,29 @@ package pt.iade.sebastiaorusu.atividade;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.GregorianCalendar;
+import java.util.ArrayList;
 
+import pt.iade.sebastiaorusu.atividade.adapters.NoteItemAdapter;
 import pt.iade.sebastiaorusu.atividade.models.NoteItem;
 
 public class MainActivity extends AppCompatActivity {
+    protected RecyclerView note_list;
+    protected NoteItemAdapter noteAdapter;
 
+    protected ArrayList<NoteItem> noteList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        noteList = NoteItem.List();
         setupComponents();
     }
 
@@ -42,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupComponents(){
+
         setSupportActionBar(findViewById(R.id.toolbar));
+        note_list = findViewById(R.id.note_list_view);
+        note_list.setLayoutManager(new LinearLayoutManager(this));
+
+
+        noteAdapter = new NoteItemAdapter(this, noteList);
+        note_list.setAdapter(noteAdapter);
+        
     }
 }
