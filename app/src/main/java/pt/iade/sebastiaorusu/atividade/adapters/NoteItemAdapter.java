@@ -23,7 +23,6 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.ViewHo
         inflater = LayoutInflater.from(context);
         notes = items;
         clickListener = null;
-
     }
 
     public void setOnClickListener(NoteClickListener listener){
@@ -60,11 +59,11 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.ViewHo
         }
         public void onClick(View view){
             if(clickListener != null){
-                clickListener.onClick(view, getAdapterPosition());
+                clickListener.onItemClick(view, getAdapterPosition());
             }
         }
     }
     public interface NoteClickListener{
-        void onClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 }

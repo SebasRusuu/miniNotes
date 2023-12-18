@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -55,7 +56,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         noteAdapter = new NoteItemAdapter(this, noteList);
+        noteAdapter.setOnClickListener(new NoteItemAdapter.NoteClickListener(){
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                intent.putExtra("note", noteList.get(position));
+                startActivity(intent);
+
+            }
+
+        });
         note_list.setAdapter(noteAdapter);
-        
+
     }
 }
