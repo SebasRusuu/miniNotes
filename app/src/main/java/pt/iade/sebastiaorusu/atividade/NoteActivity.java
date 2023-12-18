@@ -22,6 +22,8 @@ public class NoteActivity extends AppCompatActivity {
     protected EditText contentEdit;
     protected EditText modificationDateEdit;
 
+    protected int listPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,7 @@ public class NoteActivity extends AppCompatActivity {
 
         //get the item from the intent
         Intent intent = getIntent();
+        listPosition = intent.getIntExtra("position", -1);
         note = (NoteItem) intent.getSerializableExtra("note");
         setupComponents();
     }
@@ -42,10 +45,31 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.save_note){
+
             //Action "save"
+            commitView();
+            this.note.save();
+
+            //Setup data to return
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("position", this.listPosition);
+            returnIntent.putExtra("note", note);
+            setResult(AppCompatActivity.RESULT_OK, returnIntent);
+
+            finish();
+            return true;
+            //ACTION_DELETE
+        }else if(item.getItemId() == R.id.delete_note) {
+            // Ação "delete"
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("position", this.listPosition);
+            returnIntent.putExtra("delete", true); // Indica que a nota deve ser deletada
+            setResult(AppCompatActivity.RESULT_OK, returnIntent);
             finish();
             return true;
         }
+
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -64,5 +88,11 @@ public class NoteActivity extends AppCompatActivity {
         titleEdit.setText(note.getTitle());
         contentEdit.setText(note.getContent());
         modificationDateEdit.setText(new SimpleDateFormat("dd-MM-yyyy").format(note.getModificationDate().getTime()));
+    }
+
+    protected void commitView(){
+        note.setTitle(titleEdit.getText().toString());
+        note.setContent(contentEdit.getText().toString());
+        note.setModificationDate(new GregorianCalendar());
     }
 }

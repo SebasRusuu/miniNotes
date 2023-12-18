@@ -1,6 +1,7 @@
 package pt.iade.sebastiaorusu.atividade;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,15 +13,20 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import pt.iade.sebastiaorusu.atividade.adapters.NoteItemAdapter;
 import pt.iade.sebastiaorusu.atividade.models.NoteItem;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int EDITOR_ACTIVITY_RETURN_ID = 1;
     protected RecyclerView note_list;
     protected NoteItemAdapter noteAdapter;
 
     protected ArrayList<NoteItem> noteList;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         noteList = NoteItem.List();
         setupComponents();
     }
+
+
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -40,13 +48,51 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.add_note){
             //Action "add" button
             Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+            intent.putExtra("position", -1);
             intent.putExtra("note", new NoteItem());
-            startActivity(intent);
+
+
+            startActivityForResult(intent, EDITOR_ACTIVITY_RETURN_ID);
 
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EDITOR_ACTIVITY_RETURN_ID) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+                int position = data.getIntExtra("position", -1);
+                boolean isDelete = data.getBooleanExtra("delete", false);
+
+                if (isDelete && position != -1) {
+                    // Remova a nota da lista
+                    noteList.remove(position);
+                    noteAdapter.notifyItemRemoved(position);
+                } else {
+                    NoteItem updateNote = (NoteItem) data.getSerializableExtra("note");
+
+                    if (position == -1) {
+                        // Adicionar nova nota
+                        noteList.add(updateNote);
+                        noteAdapter.notifyItemInserted(noteList.size() - 1);
+                    } else {
+                        // Atualizar a nota existente
+                        if (!noteList.get(position).getTitle().equals(updateNote.getTitle()) || !noteList.get(position).getContent().equals(updateNote.getContent())) {
+                            noteList.set(position, updateNote);
+                            noteAdapter.notifyItemChanged(position);
+                        } else {
+                            updateNote.setModificationDate(Calendar.getInstance());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     private void setupComponents(){
 
@@ -60,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                intent.putExtra("position", position);
                 intent.putExtra("note", noteList.get(position));
-                startActivity(intent);
+                startActivityForResult(intent, EDITOR_ACTIVITY_RETURN_ID);
 
             }
 

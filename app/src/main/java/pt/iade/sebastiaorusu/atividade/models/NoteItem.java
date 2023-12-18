@@ -1,9 +1,14 @@
 package pt.iade.sebastiaorusu.atividade.models;
 
+import static android.system.Os.remove;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.Random;
 
 
 public class NoteItem implements Serializable {
@@ -35,9 +40,26 @@ public class NoteItem implements Serializable {
         return new NoteItem(id, "note 1", "Content 2", new GregorianCalendar(2021, 10, 1));
     }
 
+    public void save(){
+        if(id == 0) {
+            //insert
+            id = new Random().nextInt(1000) + 1;
+        }else{
+
+        }
+    }
+
+    public void delete(){
+        if(id != 0) {
+            //delete
+        }
+    }
+
     public int getId() {
         return id;
     }
+
+
 
     public String getTitle() {
         return title;
@@ -58,6 +80,8 @@ public class NoteItem implements Serializable {
     public Calendar getModificationDate() {
         return modificationDate;
     }
+
+
 
     public void setModificationDate(Calendar modificationDate) {
         this.modificationDate = modificationDate;
