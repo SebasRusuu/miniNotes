@@ -21,6 +21,7 @@ public class NoteItem implements Serializable {
     public NoteItem() {
         this(0, "", "", Calendar.getInstance());
     }
+
     public NoteItem(int id, String title, String content, Calendar modificationDate) {
         this.id = id;
         this.title = title;
@@ -29,28 +30,29 @@ public class NoteItem implements Serializable {
 
     }
 
-    public static ArrayList<NoteItem> List(){
+    public static ArrayList<NoteItem> List() {
         ArrayList<NoteItem> note = new ArrayList<>();
         note.add(new NoteItem(1, "Note 1", "Content 1", new GregorianCalendar(2021, 10, 1)));
         note.add(new NoteItem(2, "Note 2", "Content 2", new GregorianCalendar(2022, 9, 2)));
         note.add(new NoteItem(3, "Note 3", "Content 3", new GregorianCalendar(2023, 8, 3)));
         return note;
     }
-    public static NoteItem getById(int id){
+
+    public static NoteItem getById(int id) {
         return new NoteItem(id, "note 1", "Content 2", new GregorianCalendar(2021, 10, 1));
     }
 
-    public void save(){
-        if(id == 0) {
+    public void save() {
+        if (id == 0) {
             //insert
             id = new Random().nextInt(1000) + 1;
-        }else{
+        } else {
 
         }
     }
 
-    public void delete(){
-        if(id != 0) {
+    public void delete() {
+        if (id != 0) {
             //delete
         }
     }
@@ -58,7 +60,6 @@ public class NoteItem implements Serializable {
     public int getId() {
         return id;
     }
-
 
 
     public String getTitle() {
@@ -80,7 +81,6 @@ public class NoteItem implements Serializable {
     public Calendar getModificationDate() {
         return modificationDate;
     }
-
 
 
     public void setModificationDate(Calendar modificationDate) {

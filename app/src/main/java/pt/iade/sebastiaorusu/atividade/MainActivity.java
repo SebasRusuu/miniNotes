@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     protected ArrayList<NoteItem> noteList;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         noteList = NoteItem.List();
         setupComponents();
     }
-
 
 
     @Override
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.add_note){
+        if (item.getItemId() == R.id.add_note) {
             //Action "add" button
             Intent intent = new Intent(MainActivity.this, NoteActivity.class);
             intent.putExtra("position", -1);
@@ -94,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setupComponents(){
+    private void setupComponents() {
 
         setSupportActionBar(findViewById(R.id.toolbar));
         note_list = findViewById(R.id.note_list_view);
@@ -102,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         noteAdapter = new NoteItemAdapter(this, noteList);
-        noteAdapter.setOnClickListener(new NoteItemAdapter.NoteClickListener(){
+        noteAdapter.setOnClickListener(new NoteItemAdapter.NoteClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(MainActivity.this, NoteActivity.class);

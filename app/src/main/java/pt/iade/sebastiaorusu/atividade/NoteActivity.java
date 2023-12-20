@@ -44,7 +44,7 @@ public class NoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.save_note){
+        if (item.getItemId() == R.id.save_note) {
 
             //Action "save"
             commitView();
@@ -59,7 +59,7 @@ public class NoteActivity extends AppCompatActivity {
             finish();
             return true;
             //ACTION_DELETE
-        }else if(item.getItemId() == R.id.delete_note) {
+        } else if (item.getItemId() == R.id.delete_note) {
             // Ação "delete"
             Intent returnIntent = new Intent();
             returnIntent.putExtra("position", this.listPosition);
@@ -73,7 +73,7 @@ public class NoteActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupComponents(){
+    private void setupComponents() {
 
         setSupportActionBar(findViewById(R.id.toolbar));
 
@@ -81,16 +81,15 @@ public class NoteActivity extends AppCompatActivity {
         contentEdit = (EditText) findViewById(R.id.txt_notes);
         modificationDateEdit = (EditText) findViewById(R.id.date_view);
         populateView();
-
     }
 
-    protected void populateView(){
+    protected void populateView() {
         titleEdit.setText(note.getTitle());
         contentEdit.setText(note.getContent());
         modificationDateEdit.setText(new SimpleDateFormat("dd-MM-yyyy").format(note.getModificationDate().getTime()));
     }
 
-    protected void commitView(){
+    protected void commitView() {
         note.setTitle(titleEdit.getText().toString());
         note.setContent(contentEdit.getText().toString());
         note.setModificationDate(new GregorianCalendar());
