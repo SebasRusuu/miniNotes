@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        noteList = NoteItem.List();
         setupComponents();
     }
 
@@ -95,23 +94,31 @@ public class MainActivity extends AppCompatActivity {
     private void setupComponents() {
 
         setSupportActionBar(findViewById(R.id.toolbar));
-        note_list = findViewById(R.id.note_list_view);
+        note_list = (RecyclerView)findViewById(R.id.note_list_view);
         note_list.setLayoutManager(new LinearLayoutManager(this));
 
-
-        noteAdapter = new NoteItemAdapter(this, noteList);
-        noteAdapter.setOnClickListener(new NoteItemAdapter.NoteClickListener() {
+        NoteItem.List(new NoteItem.ListResponse(){
             @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
-                intent.putExtra("position", position);
-                intent.putExtra("note", noteList.get(position));
-                startActivityForResult(intent, EDITOR_ACTIVITY_RETURN_ID);
+            public void response(ArrayList<NoteItem> notes) {
+                noteList = notes;
 
+                noteAdapter = new NoteItemAdapter(MainActivity.this, noteList);
+                noteAdapter.setOnClickListener(new NoteItemAdapter.NoteClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                        intent.putExtra("position", position);
+                        intent.putExtra("note", noteList.get(position));
+                        startActivityForResult(intent, EDITOR_ACTIVITY_RETURN_ID);
+
+                    }
+
+                });
+                note_list.setAdapter(noteAdapter);
             }
 
         });
-        note_list.setAdapter(noteAdapter);
+
 
     }
 }
